@@ -1,0 +1,517 @@
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 1
+
+
+
+
+
+       MCS-51 Family Macro Assembler   A S E M - 5 1   V 1.3
+       =====================================================
+
+
+
+	Source File:	note.asm
+	Object File:	note.hex
+	List File:	note.lst
+
+
+
+ Line  I  Addr  Code            Source
+
+    1:				$nomod51
+    2:				$include (80C52.MCU)
+    3: 1			;   80C52 processor definition file
+    4: 1			;   ===============================
+    5: 1
+    6: 1	N	 80	P0	DATA	080H
+    7: 1	N	 81	SP	DATA	081H
+    8: 1	N	 82	DPL	DATA	082H
+    9: 1	N	 83	DPH	DATA	083H
+   10: 1	N	 87	PCON	DATA	087H
+   11: 1	N	 88	TCON	DATA	088H
+   12: 1	N	 89	TMOD	DATA	089H
+   13: 1	N	 8A	TL0	DATA	08AH
+   14: 1	N	 8B	TL1	DATA	08BH
+   15: 1	N	 8C	TH0	DATA	08CH
+   16: 1	N	 8D	TH1	DATA	08DH
+   17: 1	N	 90	P1	DATA	090H
+   18: 1	N	 98	SCON	DATA	098H
+   19: 1	N	 99	SBUF	DATA	099H
+   20: 1	N	 A0	P2	DATA	0A0H
+   21: 1	N	 A8	IE	DATA	0A8H
+   22: 1	N	 A9	SADDR	DATA	0A9H
+   23: 1	N	 B0	P3	DATA	0B0H
+   24: 1	N	 B8	IP	DATA	0B8H
+   25: 1	N	 B9	SADEN	DATA	0B9H
+   26: 1	N	 C8	T2CON	DATA	0C8H
+   27: 1	N	 C9	T2MOD	DATA	0C9H
+   28: 1	N	 CA	RCAP2L	DATA	0CAH
+   29: 1	N	 CB	RCAP2H	DATA	0CBH
+   30: 1	N	 CC	TL2	DATA	0CCH
+   31: 1	N	 CD	TH2	DATA	0CDH
+   32: 1	N	 D0	PSW	DATA	0D0H
+   33: 1	N	 E0	ACC	DATA	0E0H
+   34: 1	N	 F0	B	DATA	0F0H
+   35: 1
+   36: 1	N	 88	IT0	BIT	088H
+   37: 1	N	 89	IE0	BIT	089H
+   38: 1	N	 8A	IT1	BIT	08AH
+   39: 1	N	 8B	IE1	BIT	08BH
+   40: 1	N	 8C	TR0	BIT	08CH
+   41: 1	N	 8D	TF0	BIT	08DH
+   42: 1	N	 8E	TR1	BIT	08EH
+   43: 1	N	 8F	TF1	BIT	08FH
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 2
+
+
+
+ Line  I  Addr  Code            Source
+
+   44: 1	N	 90	T2	BIT	090H
+   45: 1	N	 91	T2EX	BIT	091H
+   46: 1	N	 98	RI	BIT	098H
+   47: 1	N	 99	TI	BIT	099H
+   48: 1	N	 9A	RB8	BIT	09AH
+   49: 1	N	 9B	TB8	BIT	09BH
+   50: 1	N	 9C	REN	BIT	09CH
+   51: 1	N	 9D	SM2	BIT	09DH
+   52: 1	N	 9E	SM1	BIT	09EH
+   53: 1	N	 9F	SM0	BIT	09FH
+   54: 1	N	 A8	EX0	BIT	0A8H
+   55: 1	N	 A9	ET0	BIT	0A9H
+   56: 1	N	 AA	EX1	BIT	0AAH
+   57: 1	N	 AB	ET1	BIT	0ABH
+   58: 1	N	 AC	ES	BIT	0ACH
+   59: 1	N	 AD	ET2	BIT	0ADH
+   60: 1	N	 AF	EA	BIT	0AFH
+   61: 1	N	 B0	RXD	BIT	0B0H
+   62: 1	N	 B1	TXD	BIT	0B1H
+   63: 1	N	 B2	INT0	BIT	0B2H
+   64: 1	N	 B3	INT1	BIT	0B3H
+   65: 1	N	 B4	T0	BIT	0B4H
+   66: 1	N	 B5	T1	BIT	0B5H
+   67: 1	N	 B6	WR	BIT	0B6H
+   68: 1	N	 B7	RD	BIT	0B7H
+   69: 1	N	 B8	PX0	BIT	0B8H
+   70: 1	N	 B9	PT0	BIT	0B9H
+   71: 1	N	 BA	PX1	BIT	0BAH
+   72: 1	N	 BB	PT1	BIT	0BBH
+   73: 1	N	 BC	PS	BIT	0BCH
+   74: 1	N	 BD	PT2	BIT	0BDH
+   75: 1	N	 C8	CPRL2	BIT	0C8H
+   76: 1	N	 C9	CT2	BIT	0C9H
+   77: 1	N	 CA	TR2	BIT	0CAH
+   78: 1	N	 CB	EXEN2	BIT	0CBH
+   79: 1	N	 CC	TCLK	BIT	0CCH
+   80: 1	N	 CD	RCLK	BIT	0CDH
+   81: 1	N	 CE	EXF2	BIT	0CEH
+   82: 1	N	 CF	TF2	BIT	0CFH
+   83: 1	N	 D0	P	BIT	0D0H
+   84: 1	N	 D2	OV	BIT	0D2H
+   85: 1	N	 D3	RS0	BIT	0D3H
+   86: 1	N	 D4	RS1	BIT	0D4H
+   87: 1	N	 D5	F0	BIT	0D5H
+   88: 1	N	 D6	AC	BIT	0D6H
+   89: 1	N	 D7	CY	BIT	0D7H
+   90: 1
+   91: 1	N      0000	RESET	CODE	000H
+   92: 1	N      0003	EXTI0	CODE	003H
+   93: 1	N      000B	TIMER0	CODE	00BH
+   94: 1	N      0013	EXTI1	CODE	013H
+   95: 1	N      001B	TIMER1	CODE	01BH
+   96: 1	N      0023	SINT	CODE	023H
+   97: 1	N      002B	TIMER2	CODE	02BH
+   98:
+   99:		N      00F8	c4_reload_high   equ 0f8h  ; reload value high byte for c4 (261.6 hz)
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 3
+
+
+
+ Line  I  Addr  Code            Source
+
+  100:		N      0089	c4_reload_low    equ 089h  ; reload value low byte for c4 (261.6 hz)
+  101:
+  102:		N      00F9	d4_reload_high   equ 0f9h  ; reload value high byte for d4 (293.7 hz)
+  103:		N      005A	d4_reload_low    equ 05ah  ; reload value low byte for d4 (293.7 hz)
+  104:
+  105:		N      00FA	e4_reload_high   equ 0fah  ; reload value high byte for e4 (329.6 hz)
+  106:		N      0013	e4_reload_low    equ 013h  ; reload value low byte for e4 (329.6 hz)
+  107:
+  108:		N      00FA	f4_reload_high   equ 0fah  ; reload value high byte for f4 (349.2 hz)
+  109:		N      0068	f4_reload_low    equ 068h  ; reload value low byte for f4 (349.2 hz)
+  110:
+  111:		N      00FB	g4_reload_high   equ 0fbh  ; reload value high byte for g4 (392 hz)
+  112:		N      0004	g4_reload_low    equ 004h  ; reload value low byte for g4 (392 hz)
+  113:
+  114:		N      00FB	a4_reload_high   equ 0fbh  ; reload value high byte for a4 (440 hz)
+  115:		N      0090	a4_reload_low    equ 090h  ; reload value low byte for a4 (440 hz)
+  116:
+  117:		N      00FC	b4_reload_high   equ 0fch  ; reload value high byte for b4 (493.9 hz)
+  118:		N      000C	b4_reload_low    equ 00ch  ; reload value low byte for b4 (493.9 hz)
+  119:
+  120:		N      00FC	c5_reload_high   equ 0fch  ; reload value high byte for c5 (523.3 hz)
+  121:		N      0045	c5_reload_low    equ 045h  ; reload value low byte for c5 (523.3 hz)
+  122:
+  123:		N      000A	tone_delay_base_cnt equ 10d
+  124:		N      0002	tone_delay_inc_cnt equ 2d
+  125:		N      0028	tone_delay_max_cnt equ 40d
+  126:		N      0001	tone_delay_min_cnt equ 1d
+  127:		N      0008	tone_revert_cnt equ 8d
+  128:		N      0008	tone_revert_cnt_dec equ 8d
+  129:		N      0030	tone_first_h_addr equ 30h
+  130:		N      0031	tone_first_l_addr equ 31h
+  131:		N      003E	tone_last_h_addr equ 3eh
+  132:		N      003F	tone_last_l_addr equ 3fh
+  133:		B      00A0	buzzer_pin equ p2.0
+  134:		B      00A1	led_pin equ p2.1
+  135:
+  136:		N      0000	org 0h
+  137:	  0000	02 00 1E	    jmp start
+  138:
+  139:		N      0003	org 3h
+  140:	  0003	02 00 85	    jmp increment_btn_isr
+  141:
+  142:		N      0013	org 13h
+  143:	  0013	02 00 8E	    jmp decrement_btn_isr
+  144:
+  145:		N      000B	org 0bh
+  146:	  000B	02 00 D1	    jmp timer0_isr
+  147:
+  148:		N      001B	org 1bh
+  149:	  001B	02 00 97	    jmp timer1_isr
+  150:
+  151:	  001E			start:
+  152:	  001E	75 30 F8	    mov 30h, #c4_reload_high
+  153:	  0021	75 31 89	    mov 31h, #c4_reload_low
+  154:	  0024	75 32 F9	    mov 32h, #d4_reload_high
+  155:	  0027	75 33 5A	    mov 33h, #d4_reload_low
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 4
+
+
+
+ Line  I  Addr  Code            Source
+
+  156:	  002A	75 34 FA	    mov 34h, #e4_reload_high
+  157:	  002D	75 35 13	    mov 35h, #e4_reload_low
+  158:	  0030	75 36 FA	    mov 36h, #f4_reload_high
+  159:	  0033	75 37 68	    mov 37h, #f4_reload_low
+  160:	  0036	75 38 FB	    mov 38h, #g4_reload_high
+  161:	  0039	75 39 04	    mov 39h, #g4_reload_low
+  162:	  003C	75 3A FB	    mov 3ah, #a4_reload_high
+  163:	  003F	75 3B 90	    mov 3bh, #a4_reload_low
+  164:	  0042	75 3C FC	    mov 3ch, #b4_reload_high
+  165:	  0045	75 3D 0C	    mov 3dh, #b4_reload_low
+  166:	  0048	75 3E FC	    mov 3eh, #c5_reload_high
+  167:	  004B	75 3F 45	    mov 3fh, #c5_reload_low
+  168:
+  169:	  004E	75 89 11	    mov tmod, #11h      ; both timer to 16-bit
+  170:
+  171:				     ; timer 0 to generate tone with interrupts
+  172:	  0051	85 30 8C	    mov th0, tone_first_h_addr ; load do for the first note
+  173:	  0054	85 31 8A	    mov tl0, tone_first_l_addr ; load do for the first note
+  174:	  0057	C2 8D		    clr tf0
+  175:	  0059	D2 8C		    setb tr0
+  176:	  005B	D2 A9		    setb et0
+  177:
+  178:				    ; timer 1 to generate delay with interrupts, each overflow is 50ms
+  179:	  005D	75 8D 3C	    mov th1, #03ch
+  180:	  0060	75 8B B0	    mov tl1, #0b0h
+  181:	  0063	C2 8F		    clr tf1
+  182:	  0065	D2 8E		    setb tr1
+  183:	  0067	D2 AB		    setb et1
+  184:
+  185:	  0069	D2 AA		    setb ex1
+  186:	  006B	D2 A8		    setb ex0
+  187:	  006D	D2 88		    setb it0
+  188:	  006F	D2 8A		    setb it1
+  189:
+  190:	  0071	D2 AF		    setb ea            ; enable global interrupts
+  191:
+  192:				     ; r0 and r1 used to store the address of memory for notes
+  193:	  0073	78 30		     mov r0, #tone_first_h_addr
+  194:	  0075	79 31		     mov r1, #tone_first_l_addr
+  195:
+  196:				     ; r2 is used to change the tone, changing tone every tone_delay_cnt * 50ms, i.e 40 is 2000ms, l
+				oaded from r4
+  197:	  0077	7C 0A		     mov r4, #tone_delay_base_cnt
+  198:	  0079	EC		     mov A, r4
+  199:	  007A	FA		     mov r2, A
+  200:
+  201:				     ; will revert r0 and r1 to base address (30h and 31h) once r3 gone to zero
+  202:	  007B	7B 08		     mov r3, #tone_revert_cnt
+  203:
+  204:	  007D			main_loop:
+  205:	  007D	EC		    MOV A, R4
+  206:	  007E	B4 28 02	    CJNE A, #tone_delay_max_cnt, check_max
+  207:	  0081	7C 28		    MOV R4, #tone_delay_max_cnt
+  208:	  0083			check_max:
+  209:	  0083	80 F8		    SJMP main_loop      ; Infinite loop, everything is handled by interrupts
+  210:
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 5
+
+
+
+ Line  I  Addr  Code            Source
+
+  211:	  0085			increment_btn_isr:
+  212:	  0085	EC		    mov A, R4
+  213:	  0086	24 02		    add A, #tone_delay_inc_cnt          ; Increment R4 by 10
+  214:	  0088	50 02		    jnc no_overflow      ; If no carry, no overflow
+  215:	  008A	74 28		    mov A, #tone_delay_max_cnt         ; If overflow, set A to 100
+  216:	  008C			no_overflow:
+  217:	  008C	FC		    mov r4, A
+  218:	  008D	32		    reti
+  219:
+  220:	  008E			decrement_btn_isr:
+  221:	  008E	EC		    mov a, r4
+  222:	  008F	94 02		    subb a, #tone_delay_inc_cnt         ; Decrement R4 by 10
+  223:	  0091	50 02		    jnc no_underflow     ; If no borrow, no underflow
+  224:	  0093	74 01		    mov a, #tone_delay_min_cnt
+  225:	  0095			no_underflow:
+  226:	  0095	FC		    mov r4, a
+  227:	  0096	32		    reti
+  228:
+  229:	  0097			timer1_isr:
+  230:	  0097	C2 8F		    clr tf1
+  231:	  0099	C2 8E		    clr tr1            ; stop the timer
+  232:	  009B	75 8D 3C	    mov th1, #03ch
+  233:	  009E	75 8B B0	    mov tl1, #0b0h
+  234:	  00A1	D2 8E		    setb tr1           ; restart the timer
+  235:
+  236:	  00A3	DA 07		   djnz r2, end1_isr
+  237:	  00A5	EC		   mov A, r4
+  238:	  00A6	FA		   mov r2, A
+  239:	  00A7	30 A1 03	   jnb led_pin, call_dec
+  240:	  00AA	11 B1		   acall load_tone_inc
+  241:	  00AC			end1_isr:
+  242:	  00AC	32		   reti
+  243:
+  244:	  00AD			call_dec:
+  245:	  00AD	11 C1		   acall load_tone_dec
+  246:	  00AF	80 FB		   jmp end1_isr
+  247:
+  248:	  00B1			load_tone_inc:
+  249:	  00B1	08		   inc r0
+  250:	  00B2	08		   inc r0
+  251:	  00B3	E8		   mov a, r0
+  252:	  00B4	F9		   mov r1, a
+  253:	  00B5	09		   inc r1
+  254:
+  255:	  00B6	DB 08		   djnz r3, end_tone_inc
+  256:	  00B8	B2 A1		   cpl led_pin
+  257:	  00BA	7B 08		   mov r3, #tone_revert_cnt
+  258:	  00BC	78 3E		   mov r0, #tone_last_h_addr
+  259:	  00BE	79 3F		   mov r1, #tone_last_l_addr
+  260:	  00C0			end_tone_inc:
+  261:	  00C0	22		   ret
+  262:
+  263:	  00C1			load_tone_dec:
+  264:	  00C1	18		   dec r0
+  265:	  00C2	18		   dec r0
+  266:	  00C3	E8		   mov a, r0
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 6
+
+
+
+ Line  I  Addr  Code            Source
+
+  267:	  00C4	F9		   mov r1, a
+  268:	  00C5	09		   inc r1
+  269:
+  270:	  00C6	DB 08		   djnz r3, end_tone_dec
+  271:	  00C8	B2 A1		   cpl led_pin
+  272:	  00CA	7B 08		   mov r3, #tone_revert_cnt_dec
+  273:	  00CC	78 30		   mov r0, #tone_first_h_addr
+  274:	  00CE	79 31		   mov r1, #tone_first_l_addr
+  275:	  00D0			end_tone_dec:
+  276:	  00D0	22		   ret
+  277:
+  278:				; timer 0 isr (interrupt service routine)
+  279:	  00D1			timer0_isr:
+  280:	  00D1	C2 8D		    clr tf0
+  281:	  00D3	C2 8C		    clr tr0            ; stop the timer
+  282:	  00D5	86 8C		    mov th0, @r0 ; reload high byte
+  283:	  00D7	87 8A		    mov tl0, @r1  ; reload low byte
+  284:	  00D9	B2 A0		    cpl buzzer_pin           ; toggle p2.0 (oscillate)
+  285:	  00DB	D2 8C		    setb tr0           ; restart the timer
+  286:	  00DD	32		    reti               ; return from interrupt
+  287:
+  288:				end
+
+
+
+
+
+                     register banks used:  ---
+
+                     no errors
+
+
+
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 7
+
+
+
+
+
+	       L I S T   O F   S Y M B O L S
+	       =============================
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+??ASEM_51			  NUMBER    8051
+??VERSION			  NUMBER    0130
+A4_RELOAD_HIGH			  NUMBER    00FB	 114
+A4_RELOAD_LOW			  NUMBER    0090	 115
+AC				  BIT	      D6	  88
+ACC				  DATA	      E0	  33
+B				  DATA	      F0	  34
+B4_RELOAD_HIGH			  NUMBER    00FC	 117
+B4_RELOAD_LOW			  NUMBER    000C	 118
+BUZZER_PIN			  NUMBER    00A0	 133
+C4_RELOAD_HIGH			  NUMBER    00F8	  99
+C4_RELOAD_LOW			  NUMBER    0089	 100
+C5_RELOAD_HIGH			  NUMBER    00FC	 120
+C5_RELOAD_LOW			  NUMBER    0045	 121
+CALL_DEC			  CODE	    00AD	 244
+CHECK_MAX			  CODE	    0083	 208
+CPRL2				  BIT	      C8	  75
+CT2				  BIT	      C9	  76
+CY				  BIT	      D7	  89
+D4_RELOAD_HIGH			  NUMBER    00F9	 102
+D4_RELOAD_LOW			  NUMBER    005A	 103
+DECREMENT_BTN_ISR		  CODE	    008E	 220
+DPH				  DATA	      83	   9
+DPL				  DATA	      82	   8
+E4_RELOAD_HIGH			  NUMBER    00FA	 105
+E4_RELOAD_LOW			  NUMBER    0013	 106
+EA				  BIT	      AF	  60
+END1_ISR			  CODE	    00AC	 241
+END_TONE_DEC			  CODE	    00D0	 275
+END_TONE_INC			  CODE	    00C0	 260
+ES				  BIT	      AC	  58
+ET0				  BIT	      A9	  55
+ET1				  BIT	      AB	  57
+ET2				  BIT	      AD	  59
+EX0				  BIT	      A8	  54
+EX1				  BIT	      AA	  56
+EXEN2				  BIT	      CB	  78
+EXF2				  BIT	      CE	  81
+EXTI0				  CODE	    0003	  92
+EXTI1				  CODE	    0013	  94
+F0				  BIT	      D5	  87
+F4_RELOAD_HIGH			  NUMBER    00FA	 108
+F4_RELOAD_LOW			  NUMBER    0068	 109
+G4_RELOAD_HIGH			  NUMBER    00FB	 111
+G4_RELOAD_LOW			  NUMBER    0004	 112
+IE				  DATA	      A8	  21
+IE0				  BIT	      89	  37
+IE1				  BIT	      8B	  39
+INCREMENT_BTN_ISR		  CODE	    0085	 211
+INT0				  BIT	      B2	  63
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 8
+
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+INT1				  BIT	      B3	  64
+IP				  DATA	      B8	  24
+IT0				  BIT	      88	  36
+IT1				  BIT	      8A	  38
+LED_PIN				  NUMBER    00A1	 134
+LOAD_TONE_DEC			  CODE	    00C1	 263
+LOAD_TONE_INC			  CODE	    00B1	 248
+MAIN_LOOP			  CODE	    007D	 204
+NO_OVERFLOW			  CODE	    008C	 216
+NO_UNDERFLOW			  CODE	    0095	 225
+OV				  BIT	      D2	  84
+P				  BIT	      D0	  83
+P0				  DATA	      80	   6
+P1				  DATA	      90	  17
+P2				  DATA	      A0	  20
+P3				  DATA	      B0	  23
+PCON				  DATA	      87	  10
+PS				  BIT	      BC	  73
+PSW				  DATA	      D0	  32
+PT0				  BIT	      B9	  70
+PT1				  BIT	      BB	  72
+PT2				  BIT	      BD	  74
+PX0				  BIT	      B8	  69
+PX1				  BIT	      BA	  71
+RB8				  BIT	      9A	  48
+RCAP2H				  DATA	      CB	  29
+RCAP2L				  DATA	      CA	  28
+RCLK				  BIT	      CD	  80
+RD				  BIT	      B7	  68
+REN				  BIT	      9C	  50
+RESET				  CODE	    0000	  91
+RI				  BIT	      98	  46
+RS0				  BIT	      D3	  85
+RS1				  BIT	      D4	  86
+RXD				  BIT	      B0	  61
+SADDR				  DATA	      A9	  22
+SADEN				  DATA	      B9	  25
+SBUF				  DATA	      99	  19
+SCON				  DATA	      98	  18
+SINT				  CODE	    0023	  96
+SM0				  BIT	      9F	  53
+SM1				  BIT	      9E	  52
+SM2				  BIT	      9D	  51
+SP				  DATA	      81	   7
+START				  CODE	    001E	 151
+T0				  BIT	      B4	  65
+T1				  BIT	      B5	  66
+T2				  BIT	      90	  44
+T2CON				  DATA	      C8	  26
+T2EX				  BIT	      91	  45
+T2MOD				  DATA	      C9	  27
+TB8				  BIT	      9B	  49
+TCLK				  BIT	      CC	  79
+TCON				  DATA	      88	  11
+TF0				  BIT	      8D	  41
+TF1				  BIT	      8F	  43
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 9
+
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+TF2				  BIT	      CF	  82
+TH0				  DATA	      8C	  15
+TH1				  DATA	      8D	  16
+TH2				  DATA	      CD	  31
+TI				  BIT	      99	  47
+TIMER0				  CODE	    000B	  93
+TIMER0_ISR			  CODE	    00D1	 279
+TIMER1				  CODE	    001B	  95
+TIMER1_ISR			  CODE	    0097	 229
+TIMER2				  CODE	    002B	  97
+TL0				  DATA	      8A	  13
+TL1				  DATA	      8B	  14
+TL2				  DATA	      CC	  30
+TMOD				  DATA	      89	  12
+TONE_DELAY_BASE_CNT		  NUMBER    000A	 123
+TONE_DELAY_INC_CNT		  NUMBER    0002	 124
+TONE_DELAY_MAX_CNT		  NUMBER    0028	 125
+TONE_DELAY_MIN_CNT		  NUMBER    0001	 126
+TONE_FIRST_H_ADDR		  NUMBER    0030	 129
+TONE_FIRST_L_ADDR		  NUMBER    0031	 130
+TONE_LAST_H_ADDR		  NUMBER    003E	 131
+TONE_LAST_L_ADDR		  NUMBER    003F	 132
+TONE_REVERT_CNT			  NUMBER    0008	 127
+TONE_REVERT_CNT_DEC		  NUMBER    0008	 128
+TR0				  BIT	      8C	  40
+TR1				  BIT	      8E	  42
+TR2				  BIT	      CA	  77
+TXD				  BIT	      B1	  62
+WR				  BIT	      B6	  67
