@@ -39,20 +39,21 @@ buzzer_pin equ p2.0
 led_pin equ p2.1
 th1_reload_high equ 03ch
 th1_reload_low equ 0b0h
+tmod_data equ 11h
 
-org 0h                  
+org RESET                  
     jmp start          
 
-org 3h
+org EXTI0
     jmp increment_btn_isr
 
-org 13h
+org EXTI1
     jmp decrement_btn_isr
 
-org 0bh
+org TIMER0
     jmp timer0_isr      
 
-org 1bh         
+org TIMER1         
     jmp timer1_isr 
     
 start:
@@ -73,7 +74,7 @@ start:
     mov 3eh, #c5_reload_high  
     mov 3fh, #c5_reload_low   
     
-    mov tmod, #11h      ; both timer to 16-bit
+    mov tmod, #tmod_data      ; both timer to 16-bit
     
      ; timer 0 to generate tone with interrupts
     mov th0, tone_first_h_addr ; load do for the first note 
