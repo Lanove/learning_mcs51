@@ -37,6 +37,8 @@ tone_last_h_addr equ 3eh
 tone_last_l_addr equ 3fh
 buzzer_pin equ p2.0
 led_pin equ p2.1
+th1_reload_high equ 03ch
+th1_reload_low equ 0b0h
 
 org 0h                  
     jmp start          
@@ -81,8 +83,8 @@ start:
     setb et0          
     
     ; timer 1 to generate delay with interrupts, each overflow is 50ms
-    mov th1, #03ch 
-    mov tl1, #0b0h 
+    mov th1, #th1_reload_high
+    mov tl1, #th1_reload_low
     clr tf1
     setb tr1
     setb et1
@@ -134,8 +136,8 @@ no_underflow:
 timer1_isr:
     clr tf1
     clr tr1            ; stop the timer
-    mov th1, #03ch 
-    mov tl1, #0b0h 
+    mov th1, #th1_reload_high 
+    mov tl1, #th1_reload_low 
     setb tr1           ; restart the timer
 
    djnz r2, end1_isr

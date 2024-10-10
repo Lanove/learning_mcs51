@@ -166,27 +166,27 @@ ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. 
   132:		N      003F	tone_last_l_addr equ 3fh
   133:		B      00A0	buzzer_pin equ p2.0
   134:		B      00A1	led_pin equ p2.1
-  135:
-  136:		N      0000	org 0h
-  137:	  0000	02 00 1E	    jmp start
-  138:
-  139:		N      0003	org 3h
-  140:	  0003	02 00 85	    jmp increment_btn_isr
-  141:
-  142:		N      0013	org 13h
-  143:	  0013	02 00 8E	    jmp decrement_btn_isr
-  144:
-  145:		N      000B	org 0bh
-  146:	  000B	02 00 D1	    jmp timer0_isr
-  147:
-  148:		N      001B	org 1bh
-  149:	  001B	02 00 97	    jmp timer1_isr
-  150:
-  151:	  001E			start:
-  152:	  001E	75 30 F8	    mov 30h, #c4_reload_high
-  153:	  0021	75 31 89	    mov 31h, #c4_reload_low
-  154:	  0024	75 32 F9	    mov 32h, #d4_reload_high
-  155:	  0027	75 33 5A	    mov 33h, #d4_reload_low
+  135:		N      003C	th1_reload_high equ 03ch
+  136:		N      00B0	th1_reload_low equ 0b0h
+  137:
+  138:		N      0000	org 0h
+  139:	  0000	02 00 1E	    jmp start
+  140:
+  141:		N      0003	org 3h
+  142:	  0003	02 00 85	    jmp increment_btn_isr
+  143:
+  144:		N      0013	org 13h
+  145:	  0013	02 00 8E	    jmp decrement_btn_isr
+  146:
+  147:		N      000B	org 0bh
+  148:	  000B	02 00 D1	    jmp timer0_isr
+  149:
+  150:		N      001B	org 1bh
+  151:	  001B	02 00 97	    jmp timer1_isr
+  152:
+  153:	  001E			start:
+  154:	  001E	75 30 F8	    mov 30h, #c4_reload_high
+  155:	  0021	75 31 89	    mov 31h, #c4_reload_low
 
 ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 4
 
@@ -194,62 +194,62 @@ ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. 
 
  Line  I  Addr  Code            Source
 
-  156:	  002A	75 34 FA	    mov 34h, #e4_reload_high
-  157:	  002D	75 35 13	    mov 35h, #e4_reload_low
-  158:	  0030	75 36 FA	    mov 36h, #f4_reload_high
-  159:	  0033	75 37 68	    mov 37h, #f4_reload_low
-  160:	  0036	75 38 FB	    mov 38h, #g4_reload_high
-  161:	  0039	75 39 04	    mov 39h, #g4_reload_low
-  162:	  003C	75 3A FB	    mov 3ah, #a4_reload_high
-  163:	  003F	75 3B 90	    mov 3bh, #a4_reload_low
-  164:	  0042	75 3C FC	    mov 3ch, #b4_reload_high
-  165:	  0045	75 3D 0C	    mov 3dh, #b4_reload_low
-  166:	  0048	75 3E FC	    mov 3eh, #c5_reload_high
-  167:	  004B	75 3F 45	    mov 3fh, #c5_reload_low
-  168:
-  169:	  004E	75 89 11	    mov tmod, #11h      ; both timer to 16-bit
+  156:	  0024	75 32 F9	    mov 32h, #d4_reload_high
+  157:	  0027	75 33 5A	    mov 33h, #d4_reload_low
+  158:	  002A	75 34 FA	    mov 34h, #e4_reload_high
+  159:	  002D	75 35 13	    mov 35h, #e4_reload_low
+  160:	  0030	75 36 FA	    mov 36h, #f4_reload_high
+  161:	  0033	75 37 68	    mov 37h, #f4_reload_low
+  162:	  0036	75 38 FB	    mov 38h, #g4_reload_high
+  163:	  0039	75 39 04	    mov 39h, #g4_reload_low
+  164:	  003C	75 3A FB	    mov 3ah, #a4_reload_high
+  165:	  003F	75 3B 90	    mov 3bh, #a4_reload_low
+  166:	  0042	75 3C FC	    mov 3ch, #b4_reload_high
+  167:	  0045	75 3D 0C	    mov 3dh, #b4_reload_low
+  168:	  0048	75 3E FC	    mov 3eh, #c5_reload_high
+  169:	  004B	75 3F 45	    mov 3fh, #c5_reload_low
   170:
-  171:				     ; timer 0 to generate tone with interrupts
-  172:	  0051	85 30 8C	    mov th0, tone_first_h_addr ; load do for the first note
-  173:	  0054	85 31 8A	    mov tl0, tone_first_l_addr ; load do for the first note
-  174:	  0057	C2 8D		    clr tf0
-  175:	  0059	D2 8C		    setb tr0
-  176:	  005B	D2 A9		    setb et0
-  177:
-  178:				    ; timer 1 to generate delay with interrupts, each overflow is 50ms
-  179:	  005D	75 8D 3C	    mov th1, #03ch
-  180:	  0060	75 8B B0	    mov tl1, #0b0h
-  181:	  0063	C2 8F		    clr tf1
-  182:	  0065	D2 8E		    setb tr1
-  183:	  0067	D2 AB		    setb et1
-  184:
-  185:	  0069	D2 AA		    setb ex1
-  186:	  006B	D2 A8		    setb ex0
-  187:	  006D	D2 88		    setb it0
-  188:	  006F	D2 8A		    setb it1
-  189:
-  190:	  0071	D2 AF		    setb ea            ; enable global interrupts
+  171:	  004E	75 89 11	    mov tmod, #11h      ; both timer to 16-bit
+  172:
+  173:				     ; timer 0 to generate tone with interrupts
+  174:	  0051	85 30 8C	    mov th0, tone_first_h_addr ; load do for the first note
+  175:	  0054	85 31 8A	    mov tl0, tone_first_l_addr ; load do for the first note
+  176:	  0057	C2 8D		    clr tf0
+  177:	  0059	D2 8C		    setb tr0
+  178:	  005B	D2 A9		    setb et0
+  179:
+  180:				    ; timer 1 to generate delay with interrupts, each overflow is 50ms
+  181:	  005D	75 8D 3C	    mov th1, #th1_reload_high
+  182:	  0060	75 8B B0	    mov tl1, #th1_reload_low
+  183:	  0063	C2 8F		    clr tf1
+  184:	  0065	D2 8E		    setb tr1
+  185:	  0067	D2 AB		    setb et1
+  186:
+  187:	  0069	D2 AA		    setb ex1
+  188:	  006B	D2 A8		    setb ex0
+  189:	  006D	D2 88		    setb it0
+  190:	  006F	D2 8A		    setb it1
   191:
-  192:				     ; r0 and r1 used to store the address of memory for notes
-  193:	  0073	78 30		     mov r0, #tone_first_h_addr
-  194:	  0075	79 31		     mov r1, #tone_first_l_addr
-  195:
-  196:				     ; r2 is used to change the tone, changing tone every tone_delay_cnt * 50ms, i.e 40 is 2000ms, l
+  192:	  0071	D2 AF		    setb ea            ; enable global interrupts
+  193:
+  194:				     ; r0 and r1 used to store the address of memory for notes
+  195:	  0073	78 30		     mov r0, #tone_first_h_addr
+  196:	  0075	79 31		     mov r1, #tone_first_l_addr
+  197:
+  198:				     ; r2 is used to change the tone, changing tone every tone_delay_cnt * 50ms, i.e 40 is 2000ms, l
 				oaded from r4
-  197:	  0077	7C 0A		     mov r4, #tone_delay_base_cnt
-  198:	  0079	EC		     mov A, r4
-  199:	  007A	FA		     mov r2, A
-  200:
-  201:				     ; will revert r0 and r1 to base address (30h and 31h) once r3 gone to zero
-  202:	  007B	7B 08		     mov r3, #tone_revert_cnt
-  203:
-  204:	  007D			main_loop:
-  205:	  007D	EC		    MOV A, R4
-  206:	  007E	B4 28 02	    CJNE A, #tone_delay_max_cnt, check_max
-  207:	  0081	7C 28		    MOV R4, #tone_delay_max_cnt
-  208:	  0083			check_max:
-  209:	  0083	80 F8		    SJMP main_loop      ; Infinite loop, everything is handled by interrupts
-  210:
+  199:	  0077	7C 0A		     mov r4, #tone_delay_base_cnt
+  200:	  0079	EC		     mov A, r4
+  201:	  007A	FA		     mov r2, A
+  202:
+  203:				     ; will revert r0 and r1 to base address (30h and 31h) once r3 gone to zero
+  204:	  007B	7B 08		     mov r3, #tone_revert_cnt
+  205:
+  206:	  007D			main_loop:
+  207:	  007D	EC		    MOV A, R4
+  208:	  007E	B4 28 02	    CJNE A, #tone_delay_max_cnt, check_max
+  209:	  0081	7C 28		    MOV R4, #tone_delay_max_cnt
+  210:	  0083			check_max:
 
 ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 5
 
@@ -257,62 +257,62 @@ ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. 
 
  Line  I  Addr  Code            Source
 
-  211:	  0085			increment_btn_isr:
-  212:	  0085	EC		    mov A, R4
-  213:	  0086	24 02		    add A, #tone_delay_inc_cnt          ; Increment R4 by 10
-  214:	  0088	50 02		    jnc no_overflow      ; If no carry, no overflow
-  215:	  008A	74 28		    mov A, #tone_delay_max_cnt         ; If overflow, set A to 100
-  216:	  008C			no_overflow:
-  217:	  008C	FC		    mov r4, A
-  218:	  008D	32		    reti
-  219:
-  220:	  008E			decrement_btn_isr:
-  221:	  008E	EC		    mov a, r4
-  222:	  008F	94 02		    subb a, #tone_delay_inc_cnt         ; Decrement R4 by 10
-  223:	  0091	50 02		    jnc no_underflow     ; If no borrow, no underflow
-  224:	  0093	74 01		    mov a, #tone_delay_min_cnt
-  225:	  0095			no_underflow:
-  226:	  0095	FC		    mov r4, a
-  227:	  0096	32		    reti
-  228:
-  229:	  0097			timer1_isr:
-  230:	  0097	C2 8F		    clr tf1
-  231:	  0099	C2 8E		    clr tr1            ; stop the timer
-  232:	  009B	75 8D 3C	    mov th1, #03ch
-  233:	  009E	75 8B B0	    mov tl1, #0b0h
-  234:	  00A1	D2 8E		    setb tr1           ; restart the timer
-  235:
-  236:	  00A3	DA 07		   djnz r2, end1_isr
-  237:	  00A5	EC		   mov A, r4
-  238:	  00A6	FA		   mov r2, A
-  239:	  00A7	30 A1 03	   jnb led_pin, call_dec
-  240:	  00AA	11 B1		   acall load_tone_inc
-  241:	  00AC			end1_isr:
-  242:	  00AC	32		   reti
-  243:
-  244:	  00AD			call_dec:
-  245:	  00AD	11 C1		   acall load_tone_dec
-  246:	  00AF	80 FB		   jmp end1_isr
-  247:
-  248:	  00B1			load_tone_inc:
-  249:	  00B1	08		   inc r0
-  250:	  00B2	08		   inc r0
-  251:	  00B3	E8		   mov a, r0
-  252:	  00B4	F9		   mov r1, a
-  253:	  00B5	09		   inc r1
-  254:
-  255:	  00B6	DB 08		   djnz r3, end_tone_inc
-  256:	  00B8	B2 A1		   cpl led_pin
-  257:	  00BA	7B 08		   mov r3, #tone_revert_cnt
-  258:	  00BC	78 3E		   mov r0, #tone_last_h_addr
-  259:	  00BE	79 3F		   mov r1, #tone_last_l_addr
-  260:	  00C0			end_tone_inc:
-  261:	  00C0	22		   ret
-  262:
-  263:	  00C1			load_tone_dec:
-  264:	  00C1	18		   dec r0
-  265:	  00C2	18		   dec r0
-  266:	  00C3	E8		   mov a, r0
+  211:	  0083	80 F8		    SJMP main_loop      ; Infinite loop, everything is handled by interrupts
+  212:
+  213:	  0085			increment_btn_isr:
+  214:	  0085	EC		    mov A, R4
+  215:	  0086	24 02		    add A, #tone_delay_inc_cnt          ; Increment R4 by 10
+  216:	  0088	50 02		    jnc no_overflow      ; If no carry, no overflow
+  217:	  008A	74 28		    mov A, #tone_delay_max_cnt         ; If overflow, set A to 100
+  218:	  008C			no_overflow:
+  219:	  008C	FC		    mov r4, A
+  220:	  008D	32		    reti
+  221:
+  222:	  008E			decrement_btn_isr:
+  223:	  008E	EC		    mov a, r4
+  224:	  008F	94 02		    subb a, #tone_delay_inc_cnt         ; Decrement R4 by 10
+  225:	  0091	50 02		    jnc no_underflow     ; If no borrow, no underflow
+  226:	  0093	74 01		    mov a, #tone_delay_min_cnt
+  227:	  0095			no_underflow:
+  228:	  0095	FC		    mov r4, a
+  229:	  0096	32		    reti
+  230:
+  231:	  0097			timer1_isr:
+  232:	  0097	C2 8F		    clr tf1
+  233:	  0099	C2 8E		    clr tr1            ; stop the timer
+  234:	  009B	75 8D 3C	    mov th1, #th1_reload_high
+  235:	  009E	75 8B B0	    mov tl1, #th1_reload_low
+  236:	  00A1	D2 8E		    setb tr1           ; restart the timer
+  237:
+  238:	  00A3	DA 07		   djnz r2, end1_isr
+  239:	  00A5	EC		   mov A, r4
+  240:	  00A6	FA		   mov r2, A
+  241:	  00A7	30 A1 03	   jnb led_pin, call_dec
+  242:	  00AA	11 B1		   acall load_tone_inc
+  243:	  00AC			end1_isr:
+  244:	  00AC	32		   reti
+  245:
+  246:	  00AD			call_dec:
+  247:	  00AD	11 C1		   acall load_tone_dec
+  248:	  00AF	80 FB		   jmp end1_isr
+  249:
+  250:	  00B1			load_tone_inc:
+  251:	  00B1	08		   inc r0
+  252:	  00B2	08		   inc r0
+  253:	  00B3	E8		   mov a, r0
+  254:	  00B4	F9		   mov r1, a
+  255:	  00B5	09		   inc r1
+  256:
+  257:	  00B6	DB 08		   djnz r3, end_tone_inc
+  258:	  00B8	B2 A1		   cpl led_pin
+  259:	  00BA	7B 08		   mov r3, #tone_revert_cnt
+  260:	  00BC	78 3E		   mov r0, #tone_last_h_addr
+  261:	  00BE	79 3F		   mov r1, #tone_last_l_addr
+  262:	  00C0			end_tone_inc:
+  263:	  00C0	22		   ret
+  264:
+  265:	  00C1			load_tone_dec:
+  266:	  00C1	18		   dec r0
 
 ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 6
 
@@ -320,28 +320,29 @@ ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. 
 
  Line  I  Addr  Code            Source
 
-  267:	  00C4	F9		   mov r1, a
-  268:	  00C5	09		   inc r1
-  269:
-  270:	  00C6	DB 08		   djnz r3, end_tone_dec
-  271:	  00C8	B2 A1		   cpl led_pin
-  272:	  00CA	7B 08		   mov r3, #tone_revert_cnt_dec
-  273:	  00CC	78 30		   mov r0, #tone_first_h_addr
-  274:	  00CE	79 31		   mov r1, #tone_first_l_addr
-  275:	  00D0			end_tone_dec:
-  276:	  00D0	22		   ret
-  277:
-  278:				; timer 0 isr (interrupt service routine)
-  279:	  00D1			timer0_isr:
-  280:	  00D1	C2 8D		    clr tf0
-  281:	  00D3	C2 8C		    clr tr0            ; stop the timer
-  282:	  00D5	86 8C		    mov th0, @r0 ; reload high byte
-  283:	  00D7	87 8A		    mov tl0, @r1  ; reload low byte
-  284:	  00D9	B2 A0		    cpl buzzer_pin           ; toggle p2.0 (oscillate)
-  285:	  00DB	D2 8C		    setb tr0           ; restart the timer
-  286:	  00DD	32		    reti               ; return from interrupt
-  287:
-  288:				end
+  267:	  00C2	18		   dec r0
+  268:	  00C3	E8		   mov a, r0
+  269:	  00C4	F9		   mov r1, a
+  270:	  00C5	09		   inc r1
+  271:
+  272:	  00C6	DB 08		   djnz r3, end_tone_dec
+  273:	  00C8	B2 A1		   cpl led_pin
+  274:	  00CA	7B 08		   mov r3, #tone_revert_cnt_dec
+  275:	  00CC	78 30		   mov r0, #tone_first_h_addr
+  276:	  00CE	79 31		   mov r1, #tone_first_l_addr
+  277:	  00D0			end_tone_dec:
+  278:	  00D0	22		   ret
+  279:
+  280:				; timer 0 isr (interrupt service routine)
+  281:	  00D1			timer0_isr:
+  282:	  00D1	C2 8D		    clr tf0
+  283:	  00D3	C2 8C		    clr tr0            ; stop the timer
+  284:	  00D5	86 8C		    mov th0, @r0 ; reload high byte
+  285:	  00D7	87 8A		    mov tl0, @r1  ; reload low byte
+  286:	  00D9	B2 A0		    cpl buzzer_pin           ; toggle p2.0 (oscillate)
+  287:	  00DB	D2 8C		    setb tr0           ; restart the timer
+  288:	  00DD	32		    reti               ; return from interrupt
+  289:				end
 
 
 
@@ -380,22 +381,22 @@ C4_RELOAD_HIGH			  NUMBER    00F8	  99
 C4_RELOAD_LOW			  NUMBER    0089	 100
 C5_RELOAD_HIGH			  NUMBER    00FC	 120
 C5_RELOAD_LOW			  NUMBER    0045	 121
-CALL_DEC			  CODE	    00AD	 244
-CHECK_MAX			  CODE	    0083	 208
+CALL_DEC			  CODE	    00AD	 246
+CHECK_MAX			  CODE	    0083	 210
 CPRL2				  BIT	      C8	  75
 CT2				  BIT	      C9	  76
 CY				  BIT	      D7	  89
 D4_RELOAD_HIGH			  NUMBER    00F9	 102
 D4_RELOAD_LOW			  NUMBER    005A	 103
-DECREMENT_BTN_ISR		  CODE	    008E	 220
+DECREMENT_BTN_ISR		  CODE	    008E	 222
 DPH				  DATA	      83	   9
 DPL				  DATA	      82	   8
 E4_RELOAD_HIGH			  NUMBER    00FA	 105
 E4_RELOAD_LOW			  NUMBER    0013	 106
 EA				  BIT	      AF	  60
-END1_ISR			  CODE	    00AC	 241
-END_TONE_DEC			  CODE	    00D0	 275
-END_TONE_INC			  CODE	    00C0	 260
+END1_ISR			  CODE	    00AC	 243
+END_TONE_DEC			  CODE	    00D0	 277
+END_TONE_INC			  CODE	    00C0	 262
 ES				  BIT	      AC	  58
 ET0				  BIT	      A9	  55
 ET1				  BIT	      AB	  57
@@ -414,7 +415,7 @@ G4_RELOAD_LOW			  NUMBER    0004	 112
 IE				  DATA	      A8	  21
 IE0				  BIT	      89	  37
 IE1				  BIT	      8B	  39
-INCREMENT_BTN_ISR		  CODE	    0085	 211
+INCREMENT_BTN_ISR		  CODE	    0085	 213
 INT0				  BIT	      B2	  63
 
 ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 8
@@ -428,11 +429,11 @@ IP				  DATA	      B8	  24
 IT0				  BIT	      88	  36
 IT1				  BIT	      8A	  38
 LED_PIN				  NUMBER    00A1	 134
-LOAD_TONE_DEC			  CODE	    00C1	 263
-LOAD_TONE_INC			  CODE	    00B1	 248
-MAIN_LOOP			  CODE	    007D	 204
-NO_OVERFLOW			  CODE	    008C	 216
-NO_UNDERFLOW			  CODE	    0095	 225
+LOAD_TONE_DEC			  CODE	    00C1	 265
+LOAD_TONE_INC			  CODE	    00B1	 250
+MAIN_LOOP			  CODE	    007D	 206
+NO_OVERFLOW			  CODE	    008C	 218
+NO_UNDERFLOW			  CODE	    0095	 227
 OV				  BIT	      D2	  84
 P				  BIT	      D0	  83
 P0				  DATA	      80	   6
@@ -467,7 +468,7 @@ SM0				  BIT	      9F	  53
 SM1				  BIT	      9E	  52
 SM2				  BIT	      9D	  51
 SP				  DATA	      81	   7
-START				  CODE	    001E	 151
+START				  CODE	    001E	 153
 T0				  BIT	      B4	  65
 T1				  BIT	      B5	  66
 T2				  BIT	      90	  44
@@ -489,12 +490,14 @@ SYMBOL				  TYPE     VALUE	LINE
 TF2				  BIT	      CF	  82
 TH0				  DATA	      8C	  15
 TH1				  DATA	      8D	  16
+TH1_RELOAD_HIGH			  NUMBER    003C	 135
+TH1_RELOAD_LOW			  NUMBER    00B0	 136
 TH2				  DATA	      CD	  31
 TI				  BIT	      99	  47
 TIMER0				  CODE	    000B	  93
-TIMER0_ISR			  CODE	    00D1	 279
+TIMER0_ISR			  CODE	    00D1	 281
 TIMER1				  CODE	    001B	  95
-TIMER1_ISR			  CODE	    0097	 229
+TIMER1_ISR			  CODE	    0097	 231
 TIMER2				  CODE	    002B	  97
 TL0				  DATA	      8A	  13
 TL1				  DATA	      8B	  14
