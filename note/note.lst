@@ -164,8 +164,8 @@ ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. 
   130:		N      0031	tone_first_l_addr equ 31h
   131:		N      003E	tone_last_h_addr equ 3eh
   132:		N      003F	tone_last_l_addr equ 3fh
-  133:		B      00A0	buzzer_pin equ p2.0
-  134:		B      00A1	led_pin equ p2.1
+  133:		B      00A1	buzzer_pin equ p2.1
+  134:		B      00A7	led_pin equ p2.7
   135:		N      003C	th1_reload_high equ 03ch
   136:		N      00B0	th1_reload_low equ 0b0h
   137:		N      0011	tmod_data equ 11h
@@ -288,7 +288,7 @@ ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. 
   239:	  00A3	DA 07		   djnz r2, end1_isr
   240:	  00A5	EC		   mov A, r4
   241:	  00A6	FA		   mov r2, A
-  242:	  00A7	30 A1 03	   jnb led_pin, call_dec
+  242:	  00A7	30 A7 03	   jnb led_pin, call_dec
   243:	  00AA	11 B1		   acall load_tone_inc
   244:	  00AC			end1_isr:
   245:	  00AC	32		   reti
@@ -305,7 +305,7 @@ ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. 
   256:	  00B5	09		   inc r1
   257:
   258:	  00B6	DB 08		   djnz r3, end_tone_inc
-  259:	  00B8	B2 A1		   cpl led_pin
+  259:	  00B8	B2 A7		   cpl led_pin
   260:	  00BA	7B 08		   mov r3, #tone_revert_cnt
   261:	  00BC	78 3E		   mov r0, #tone_last_h_addr
   262:	  00BE	79 3F		   mov r1, #tone_last_l_addr
@@ -327,7 +327,7 @@ ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. 
   271:	  00C5	09		   inc r1
   272:
   273:	  00C6	DB 08		   djnz r3, end_tone_dec
-  274:	  00C8	B2 A1		   cpl led_pin
+  274:	  00C8	B2 A7		   cpl led_pin
   275:	  00CA	7B 08		   mov r3, #tone_revert_cnt_dec
   276:	  00CC	78 30		   mov r0, #tone_first_h_addr
   277:	  00CE	79 31		   mov r1, #tone_first_l_addr
@@ -340,7 +340,7 @@ ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. 
   284:	  00D3	C2 8C		    clr tr0            ; stop the timer
   285:	  00D5	86 8C		    mov th0, @r0 ; reload high byte
   286:	  00D7	87 8A		    mov tl0, @r1  ; reload low byte
-  287:	  00D9	B2 A0		    cpl buzzer_pin           ; toggle p2.0 (oscillate)
+  287:	  00D9	B2 A1		    cpl buzzer_pin           ; toggle p2.0 (oscillate)
   288:	  00DB	D2 8C		    setb tr0           ; restart the timer
   289:	  00DD	32		    reti               ; return from interrupt
   290:				end
@@ -377,7 +377,7 @@ ACC				  DATA	      E0	  33
 B				  DATA	      F0	  34
 B4_RELOAD_HIGH			  NUMBER    00FC	 117
 B4_RELOAD_LOW			  NUMBER    000C	 118
-BUZZER_PIN			  NUMBER    00A0	 133
+BUZZER_PIN			  NUMBER    00A1	 133
 C4_RELOAD_HIGH			  NUMBER    00F8	  99
 C4_RELOAD_LOW			  NUMBER    0089	 100
 C5_RELOAD_HIGH			  NUMBER    00FC	 120
@@ -429,7 +429,7 @@ INT1				  BIT	      B3	  64
 IP				  DATA	      B8	  24
 IT0				  BIT	      88	  36
 IT1				  BIT	      8A	  38
-LED_PIN				  NUMBER    00A1	 134
+LED_PIN				  NUMBER    00A7	 134
 LOAD_TONE_DEC			  CODE	    00C1	 266
 LOAD_TONE_INC			  CODE	    00B1	 251
 MAIN_LOOP			  CODE	    007D	 207
