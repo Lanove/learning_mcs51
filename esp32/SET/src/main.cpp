@@ -12,6 +12,7 @@
 #define I2C_SDA 21
 #define I2C_SCL 22
 #define DDS_MULTIPLIER 100ULL
+#define LCD_PERIOD 2000
 
 #define WIFI_SSID "realme C15"
 #define WIFI_PASSWORD "lpkojihu"
@@ -28,6 +29,14 @@ FirebaseConfig config;
 
 LiquidCrystal_I2C lcd(0x23, 16, 2);
 Si5351 dds;
+
+bool ledState = false;
+bool last_get_state = false;
+bool lcd_state = true;
+uint8_t button_pin = 26;
+uint8_t led_pin = 12;
+uint32_t last_millis;
+long ch0_val, ch1_val, ch2_val;
 
 int count = 0;
 void scan_i2c();
@@ -48,7 +57,8 @@ void setup() {
   if (!dds.init(SI5351_CRYSTAL_LOAD_8PF, 0, 0)) {
     lcd.setCursor(0, 0);
     lcd.print("DDS Not FOUND");
-    while(1);
+    while (1)
+      ;
   }
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -57,6 +67,12 @@ void setup() {
     lcd.clear();
     delay(300);
   }
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Connected");
+  lcd.setCursor(0, 1);
+  lcd.print("Wait FB Auth");
 
   Serial.println();
   Serial.print("Connected with IP: ");
@@ -83,40 +99,99 @@ void setup() {
 
   Firebase.begin(&config, &auth);
   String var = "$userId";
-  String val = "($userId === auth.uid && auth.token.premium_account === true && auth.token.admin === true)";
+  String val = "($userId === auth.uid && auth.token.premium_account === true "
+               "&& auth.token.admin === true)";
   Firebase.RTDB.setReadWriteRules(&fbdo, base_path, var, val, val,
                                   DATABASE_SECRET);
 
-  // pinMode(26, INPUT_PULLUP);
-  // pinMode(12, OUTPUT);
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Connected");
+  lcd.setCursor(0, 1);
+  lcd.print("Press to start");
+
+  pinMode(button_pin, INPUT_PULLUP);
+  pinMode(led_pin, OUTPUT);
 }
 
 void loop() {
-  // scan_i2c();
-  // static bool last_buttonState;
-  // bool buttonState = digitalRead(26);
-  // if (buttonState != last_buttonState && buttonState == 0) {
-  //   Serial.printf("Set counter... %s to %d\n",
-  //                 Firebase.RTDB.setInt(&fbdo, "/Lampu/counter", ++count)
-  //                     ? "ok"
-  //                     : fbdo.errorReason().c_str(),
-  //                 count);
-  //   if (Firebase.RTDB.getBool(&fbdo, "/Lampu/Lampu1")) {
+  static bool last_buttonState;
+  bool buttonState = digitalRead(button_pin);
+  if (buttonState != last_buttonState && buttonState == 0) {
+    last_get_state = false;
+    if (!Firebase.ready()) {
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("FB not ready");
+      Serial.println("Firebase not ready");
+      digitalWrite(led_pin, LOW);
+      return;
+    }
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Getting data...");
+    digitalWrite(led_pin, HIGH);
+    bool ch0_get = Firebase.RTDB.getString(&fbdo, "/dds/ch0");
+    if (ch0_get) {
+      String ch0_string = fbdo.stringData();
+      ch0_val = ch0_string.toInt();
+    }
+    bool ch1_get = Firebase.RTDB.getString(&fbdo, "/dds/ch1");
+    if (ch1_get) {
+      String ch1_string = fbdo.stringData();
+      ch1_val = ch1_string.toInt();
+    }
+    bool ch2_get = Firebase.RTDB.getString(&fbdo, "/dds/ch2");
+    if (ch2_get) {
+      String ch2_string = fbdo.stringData();
+      ch2_val = ch2_string.toInt();
+    }
+    if (ch0_get && ch1_get && ch2_get) {
+      last_get_state = true;
+      Serial.printf("Ch0: %d, Ch1: %d, Ch2: %d\n", ch0_val, ch1_val, ch2_val);
+      dds.set_freq(ch0_val * 1000 * DDS_MULTIPLIER, SI5351_CLK0);
+      dds.set_freq(ch1_val * 1000 * DDS_MULTIPLIER, SI5351_CLK1);
+      dds.set_freq(ch2_val * 1000 * DDS_MULTIPLIER, SI5351_CLK2);
+    } else {
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Fail to get data");
+    }
+    digitalWrite(led_pin, LOW);
+  }
 
-  //     String fbdoData = fbdo.stringData();
-  //     Serial.printf("Get OK, Data: %s\n", fbdoData.c_str());
-  //     if (fbdoData == "true")
-  //       ledState = true;
-  //     else
-  //       ledState = false;
+  if (millis() - last_millis >= LCD_PERIOD && last_get_state) {
+    last_millis = millis();
+    if (lcd_state) {
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      if(ch0_val < 1000)
+        lcd.printf("%ldkHz", ch0_val);
+      else
+        lcd.printf("%.1fMHz", (float) ch0_val / 1000.);
+      lcd.setCursor(9, 0);
+      if(ch1_val < 1000)
+        lcd.printf("%ldkHz", ch1_val);
+      else
+        lcd.printf("%.1fMHz", (float) ch1_val / 1000.);
+      lcd.setCursor(0, 1);
+      if(ch2_val < 1000)
+        lcd.printf("%ldkHz", ch2_val);
+      else
+        lcd.printf("%.1fMHz", (float) ch2_val / 1000.);
+    }else{
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("CH0");
+      lcd.setCursor(9, 0);
+      lcd.print("CH1");
+      lcd.setCursor(0, 1);
+      lcd.print("CH2");
+    }
+    lcd_state = !lcd_state;
+  }
 
-  //     digitalWrite(12, ledState);
-  //   } else {
-  //     Serial.println("Get Failed");
-  //   }
-  // }
-  // last_buttonState = buttonState;
-  // Firebase.ready();
+  last_buttonState = buttonState;
 }
 
 void scan_i2c() {
