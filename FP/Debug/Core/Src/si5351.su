@@ -1,0 +1,35 @@
+../Core/Src/si5351.cpp:39:1:Si5351::Si5351(I2C_HandleTypeDef*, uint8_t)	24	static
+../Core/Src/si5351.cpp:66:6:bool Si5351::init(uint8_t, uint32_t, int32_t)	32	static
+../Core/Src/si5351.cpp:109:6:void Si5351::reset()	32	static
+../Core/Src/si5351.cpp:182:9:uint8_t Si5351::set_freq(uint64_t, si5351_clock)	104	static
+../Core/Src/si5351.cpp:403:9:uint8_t Si5351::set_freq_manual(uint64_t, uint64_t, si5351_clock)	56	static
+../Core/Src/si5351.cpp:455:6:void Si5351::set_pll(uint64_t, si5351_pll)	64	static
+../Core/Src/si5351.cpp:528:6:void Si5351::set_ms(si5351_clock, Si5351RegSet, uint8_t, uint8_t, uint8_t)	32	static
+../Core/Src/si5351.cpp:625:6:void Si5351::output_enable(si5351_clock, uint8_t)	24	static
+../Core/Src/si5351.cpp:649:6:void Si5351::drive_strength(si5351_clock, si5351_drive)	24	static
+../Core/Src/si5351.cpp:686:6:void Si5351::update_status()	16	static
+../Core/Src/si5351.cpp:717:6:void Si5351::set_correction(int32_t, si5351_pll_input)	32	static
+../Core/Src/si5351.cpp:737:6:void Si5351::set_phase(si5351_clock, uint8_t)	16	static
+../Core/Src/si5351.cpp:754:9:int32_t Si5351::get_correction(si5351_pll_input)	16	static
+../Core/Src/si5351.cpp:766:6:void Si5351::pll_reset(si5351_pll)	16	static
+../Core/Src/si5351.cpp:784:6:void Si5351::set_ms_source(si5351_clock, si5351_pll)	24	static
+../Core/Src/si5351.cpp:809:6:void Si5351::set_int(si5351_clock, uint8_t)	24	static
+../Core/Src/si5351.cpp:850:6:void Si5351::set_clock_pwr(si5351_clock, uint8_t)	24	static
+../Core/Src/si5351.cpp:872:6:void Si5351::set_clock_invert(si5351_clock, uint8_t)	24	static
+../Core/Src/si5351.cpp:898:6:void Si5351::set_clock_source(si5351_clock, si5351_clock_source)	24	static
+../Core/Src/si5351.cpp:942:6:void Si5351::set_clock_disable(si5351_clock, si5351_clock_disable)	24	static
+../Core/Src/si5351.cpp:979:6:void Si5351::set_clock_fanout(si5351_clock_fanout, uint8_t)	24	static
+../Core/Src/si5351.cpp:1020:6:void Si5351::set_pll_input(si5351_pll, si5351_pll_input)	32	static
+../Core/Src/si5351.cpp:1066:6:void Si5351::set_vcxo(uint64_t, uint8_t)	128	static
+../Core/Src/si5351.cpp:1148:6:void Si5351::set_ref_freq(uint32_t, si5351_pll_input)	24	static
+../Core/Src/si5351.cpp:1180:9:uint8_t Si5351::si5351_write_bulk(uint8_t, uint8_t, uint8_t*)	56	static
+../Core/Src/si5351.cpp:1196:9:uint8_t Si5351::si5351_write(uint8_t, uint8_t)	40	static
+../Core/Src/si5351.cpp:1213:9:uint8_t Si5351::si5351_read(uint8_t)	40	static
+../Core/Src/si5351.cpp:1225:10:uint64_t Si5351::pll_calc(si5351_pll, uint64_t, Si5351RegSet*, int32_t, uint8_t)	408	static
+../Core/Src/si5351.cpp:1300:10:uint64_t Si5351::multisynth_calc(uint64_t, uint64_t, Si5351RegSet*)	128	static
+../Core/Src/si5351.cpp:1378:10:uint64_t Si5351::multisynth67_calc(uint64_t, uint64_t, Si5351RegSet*)	104	static
+../Core/Src/si5351.cpp:1450:6:void Si5351::update_sys_status(Si5351Status*)	24	static
+../Core/Src/si5351.cpp:1463:6:void Si5351::update_int_status(Si5351IntStatus*)	24	static
+../Core/Src/si5351.cpp:1475:6:void Si5351::ms_div(si5351_clock, uint8_t, uint8_t)	24	static
+../Core/Src/si5351.cpp:1534:9:uint8_t Si5351::select_r_div(uint64_t*)	32	static
+../Core/Src/si5351.cpp:1571:9:uint8_t Si5351::select_r_div_ms67(uint64_t*)	32	static

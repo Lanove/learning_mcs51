@@ -1,0 +1,18 @@
+../Core/Inc/lcd_controller.h:39:7:LCD_Controller::LCD_Controller()	1
+../Core/Src/lcd_controller.cpp:14:6:void format_number_with_separator(uint64_t, char*, size_t)	4
+../Core/Src/lcd_controller.cpp:42:6:void LCD_Controller::begin()	1
+../Core/Src/lcd_controller.cpp:44:6:void LCD_Controller::set_screen(LCD_SCREEN)	3
+../Core/Src/lcd_controller.cpp:69:6:void LCD_Controller::service()	17
+../Core/Src/lcd_controller.cpp:136:6:void LCD_Controller::draw_cursor(int8_t, bool)	3
+../Core/Src/lcd_controller.cpp:143:6:void LCD_Controller::set_arrow_cursor(int8_t)	4
+../Core/Src/lcd_controller.cpp:163:6:void LCD_Controller::increment_arrow_cursor()	1
+../Core/Src/lcd_controller.cpp:165:6:void LCD_Controller::decrement_arrow_cursor()	1
+../Core/Src/lcd_controller.cpp:167:6:void LCD_Controller::set_arrow_blink(bool)	2
+../Core/Src/lcd_controller.cpp:178:6:void LCD_Controller::set_digit_row_col(int8_t, int8_t)	1
+../Core/Src/lcd_controller.cpp:183:6:void LCD_Controller::set_digit_row(int8_t)	1
+../Core/Src/lcd_controller.cpp:184:6:void LCD_Controller::set_digit_col(int8_t)	1
+../Core/Src/lcd_controller.cpp:186:6:void LCD_Controller::set_digit_blink(bool)	1
+../Core/Src/lcd_controller.cpp:191:6:void LCD_Controller::increment_digit_cursor()	2
+../Core/Src/lcd_controller.cpp:197:6:void LCD_Controller::decrement_digit_cursor()	2
+../Core/Src/lcd_controller.cpp:201:1:void __static_initialization_and_destruction_0(int, int)	3
+../Core/Src/lcd_controller.cpp:201:1:cpp)	1

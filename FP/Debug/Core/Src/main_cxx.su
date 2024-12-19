@@ -1,0 +1,13 @@
+../Core/Inc/lcd_controller.h:93:9:int LCD_Controller::get_arrow_cursor()	16	static
+../Core/Inc/lcd_controller.h:95:10:bool LCD_Controller::get_arrow_blink()	16	static
+../Core/Inc/lcd_controller.h:106:9:int LCD_Controller::get_digit_row()	16	static
+../Core/Inc/lcd_controller.h:107:9:int LCD_Controller::get_digit_col()	16	static
+../Core/Inc/lcd_controller.h:108:10:void LCD_Controller::force_refresh_row(int)	16	static
+../Core/Src/main_cxx.cpp:38:6:void check_encoder_direction(TIM_HandleTypeDef*)	16	static
+../Core/Src/main_cxx.cpp:55:6:void HAL_GPIO_EXTI_Callback(uint16_t)	16	static
+../Core/Src/main_cxx.cpp:63:6:void bound_value(uint64_t&, uint64_t, uint64_t)	24	static
+../Core/Src/main_cxx.cpp:71:6:void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef*)	16	static
+../Core/Src/main_cxx.cpp:76:6:void main_cxx()	296	static
+/opt/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.1.0.202410170702/tools/arm-none-eabi/include/c++/12.3.1/cmath:415:5:constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type std::pow(_Tp, _Up) [with _Tp = int; _Up = int]	24	static
+../Core/Src/main_cxx.cpp:236:1:void __static_initialization_and_destruction_0(int, int)	24	static
+../Core/Src/main_cxx.cpp:236:1:cpp)	8	static
